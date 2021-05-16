@@ -2,33 +2,13 @@
 title: "経済学における量的テキスト分析"
 author: "渡辺耕平"
 date: "2021年05月16日"
-output: 
-    revealjs::revealjs_presentation: 
-        theme: simple
-        highlight: haddock
-        center: true
-        transition: none
-        css: style.css
+output: github_document
+    
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 ```
-
-## 自己紹介
-
-- 所属
-    - データ科学アドバイザー，Lazard Asset Management（アメリカ／イギリス）
-    - 招聘研究員，高等研究所，早稲田大学
-    - 訪問研究員，US Centre, London School of Economics (イギリス)
-- 経歴
-    - 2019−2021，上級講師，デジタル科学センター／政治学部，University of Innsbruck (オーストリア)
-    - 2018−2019，講師，高等研究所，早稲田大学
-    - 2013−2018，博士課程／ポスドク研究員，方法論学部，London School of Economics (イギリス)
-- 研究分野
-    - 政治コミュニケーション（ニュースのバイアス，メディアによる議題設定）
-    - 国際コミュニケーション（プロパガンダ，グローバリゼーション）
-    - 量的テキスト分析用ソフトウェアの開発（quanteda, seededlda, LSXなど）
 
 ## 本チュートリアルの構成
 
