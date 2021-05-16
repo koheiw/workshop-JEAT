@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
+.reveal {
+  font-size: 25px;
+}
+
+.reveal section img {
+  border: 0 solid #000;  
+  box-shadow: none;
+}
+
+.reveal h1, 
+.reveal h2, 
+.reveal h3, 
+.reveal h4 {
+  text-align: left;
+  font-weight: bold;
+}
+
+.reveal h3, 
+.reveal h4 {
+  font-size: 90%;
+  margin-bottom: 10px;
+}
+
+.reveal .subtitle{
+  font-size: 120%;
+}
+
+.reveal .author{
+  font-weight: normal;
+  font-size: 90%;
+}
+
+.reveal .date{
+  font-weight: normal;
+  font-size: 90%;
+}
+
+.reveal p {
+  text-align: left;
+  font-size: 90%;
+}
+.reveal ul, .reveal ol {
+  display: block;
+  font-size: 90%;
+}
+.reveal ul ul, .reveal ul ol, .reveal ol ol, .reveal ol ul {
+  padding-left: 5px;
+}
+
+.reveal section#references p {
+  font-size: 18px;
+  text-indent: -20px;
+  padding: 0 0 0 20px;
+  margin: 0;
+}
+
+.reveal .slide-number {
+  font-size: 15px;
+}
+
+.reveal pre {
+  margin: 0 auto;
+  box-shadow: none;
+  background-color: rgb(230, 230, 230);
+}
+
+.reveal code {
+  font-size: 100%;
+  font-family: "TakaoGothic";
+}
+.reveal p code,
+.reveal li code{
+  color: rgb(100, 100, 100);
+}
+
+.reveal table {
+  margin: 20px auto
+}
+
+.reveal blockquote {
+  box-shadow: none;
+}
+

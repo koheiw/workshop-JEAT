@@ -1,0 +1,225 @@
+---
+title: "経済学における量的テキスト分析"
+author: "渡辺耕平"
+date: "2021年05月16日"
+output: 
+    revealjs::revealjs_presentation: 
+        theme: simple
+        highlight: haddock
+        center: true
+        transition: none
+        css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
+```
+
+## 自己紹介
+
+- 所属
+    - データ科学アドバイザー，Lazard Asset Management（アメリカ／イギリス）
+    - 招聘研究員，高等研究所，早稲田大学
+    - 訪問研究員，US Centre, London School of Economics (イギリス)
+- 経歴
+    - 2019−2021，上級講師，デジタル科学センター／政治学部，University of Innsbruck (オーストリア)
+    - 2018−2019，講師，高等研究所，早稲田大学
+    - 2013−2018，博士課程／ポスドク研究員，方法論学部，London School of Economics (イギリス)
+- 研究分野
+    - 政治コミュニケーション（ニュースのバイアス，メディアによる議題設定）
+    - 国際コミュニケーション（プロパガンダ，グローバリゼーション）
+    - 量的テキスト分析用ソフトウェアの開発（quanteda, seededlda, LSXなど）
+
+## 本チュートリアルの構成
+
+- 概要
+    - 政治学における応用
+    - テキスト分析の手順
+    - 量的分析法の種類
+- デモ
+    - ハローワークの求人票の分析
+- まとめ
+    - 追加の情報など
+- 質疑応答
+
+## 使用するソフトウェア
+
+- R 4.0以降
+- Rパッケージ
+     - quanteda
+     - quanteda.textstats
+     - seededlda
+- R Studio
+
+## quantedaの特徴
+
+- Unicodeに準拠し，アジア言語の文書を処理できる．
+- C++による並列化により大規模なテキストデータを処理できる．
+- 欧米の大学の量的テキスト分析の研究と教育で広く使われている．
+
+## 配布ファイル
+
+Dropbox (https://bit.ly/3ePC9AC)
+
+- スライド
+    - slides.html
+- データ（元ファイルが必要であれば川田氏に相談）
+- キーワード辞書
+- Rスクリプト
+
+## 量的テキスト分析とは
+
+- 政治学では文書が重要な研究資料
+    - 質的テキスト分析
+        - 例：スピーチ，選挙広報，政府報告書，新聞記事など
+    - 量的テキスト分析（2000年代以降)
+        - 自然言語処理のツールを用いて多数の文書を分析する
+        - 文書データを数値データに変換し，統計的な分析を行う．
+- 政治学者は文書そのものに関心があるわけではない
+    - 文書を通じて政治的行為者に関する推定を行う．
+        - 例：イデオロギー，精神状態，偏見，行動など
+    - 文書を直接的には測定できないものを推計する
+        - 例：政治的な影響力，経済的の不確実性，地政学的な脅威認識など
+
+## 一般的な分析手順
+
+- 文書の収集
+- 前処理
+    - クリーニング（ページ番号，日付などの削除）
+    - トークン化（文を語に分割）
+        - 語彙に基づいた分割（形態素解析は行わない）
+        - 共起分析によって未知語をトークン化する
+    - 数字，記号，文法的語の削除
+    - 文書行列の作成
+- 量的分析
+    - 頻度分析，クラスタリング，辞書分析，ネットワーク分析，機械学習など
+- 結果の解釈
+
+# 前処理
+
+## トークン化
+
+```{r}
+require(quanteda)
+txt <- c("施設利用者の生活支援、作業支援、食事介助、入浴介助などを行っています。",
+         "福祉に興味、熱意のある方を募集しています。未経験者も歓迎します。")
+toks <- tokens(txt, remove_punct = TRUE)
+print(toks, max_ndoc = -1, max_ntok = -1)
+```
+
+##  共起分析によるトークンの修正
+
+```{r}
+seqs <- readRDS("collocations.RDS")
+nrow(seqs)
+head(seqs)
+```
+
+```{r}
+toks <- tokens_compound(toks, seqs, concatenator = '', join = FALSE)
+print(toks, max_ndoc = -1, max_ntok = -1)
+```
+
+##  文法的語の削除
+
+```{r}
+toks <- tokens_remove(toks, stopwords("ja", "marimo"), padding = TRUE) 
+toks <- tokens_remove(toks, "^[ぁ-ん]+$", valuetype = "regex", min_nchar = 2, padding = TRUE)
+print(toks, max_ndoc = -1, max_ntok = -1)
+```
+
+##  文書行列の作成
+
+```{r}
+dfm(toks, remove_padding = TRUE)
+```
+
+# 量的分析
+
+## 量的分析の手法
+
+- 統計分析
+    - 頻度分析，共起分析など
+- 辞書分析
+    - 感情分析，話題分類，地理分類など
+- 機械学習
+    - 教師あり，教師なし，準教師あり学習
+
+## 頻度分析
+
+- 単純頻度
+    - 文法もしくは分野と関連する一般的な語が強調される．
+- 相対頻度
+    - 選択された文書の内容と関連した語が強調される．
+
+## 辞書分析
+
+- 既存の辞書
+    - 英語
+        - Lexicoder Sentiment Dictionary (LSD)，Linguistic Inquiry and Word Count (LIWC) など
+    - 日本語
+        - 日本語評価極性辞書
+- 辞書の作成
+    - 分析者が関心のある概念を選び，それらを多数のキーワードによって定義する．
+    - 正確な分析のためには数百から数千のキーワードを辞書に含む必要がある．
+
+## 辞書の例
+
+YAMLフォーマットによって，辞書の階層的な構造を定義できる．
+
+```{r echo=FALSE}
+cat(readLines("dictionary.yml"), sep = "\n")
+```
+
+## 機械学習
+
+- 教師あり学習
+    - Support Vector Machine，ナイーブベイズ，Random Forestsなど
+    - 訓練データを通じてユーザーが分析結果を制御できる．
+    - 複雑なモデルを訓練するためのコストが高い．
+- 教師なし学習
+    - Latent Dirichlet Allocation（LDA），対応分析，Multi-dimensional Scalingなど
+    - ユーザーが分析結果を制御できない．
+    - 訓練をするための費用が全くかからない．
+- 準教師あり学習
+    - Seeded LDA，Newsmap，Latent Semantic Scaling
+    - 種語を通じてユーザーが分析結果を制御できる．
+    - 訓練するためのコストが小さい．
+
+## デモ用ファイル
+
+Dropbox (https://bit.ly/3ePC9AC)
+
+- 前処理
+    - corpus.R
+    - tokens.R
+- 頻度分析
+    - frequency.R
+- 辞書分析
+    - dictionary.R
+- トピックモデル
+    - lda.R
+    - lda.Rmd
+
+## まとめ
+
+- Rパッケージだけで，アジア言語の文書を分析をできる．
+    - 日本語だけではなく中国語，韓国語，アラビア語なども分析できる．
+    - quanteda，seededldaはすべてCRANで公開されているオープンソースのソフトウェア．
+- 準教師あり学習で，理論的枠組みに基づいた分析を低コストで自動化できる．
+    - 種語を選ぶだけで，アルゴリズムが関連する語を自動的に特定し，文書の分類を行う．
+    - 適切な種語を選択するためには分析するデータを深く理解する必要がある．
+- 量的テキスト分析で文書から数値データを生成し，経済学の研究に用いることができるだろう．
+    
+## 追加情報
+
+- ブログ
+    - Watanabe Kohei (https://blog.koheiw.net)
+- Rパッケージ
+    - Quanteda (CRAN, https://quanteda.io)
+    - Quanteda Tutorials (https://tutorials.quanteda.io)
+- 論文
+    - Watanabe, K. (2020). Latent Semantic Scaling: A Semisupervised Text Analysis Technique for New Domains and Languages. Communication Methods and Measures. https://doi.org/10.1080/19312458.2020.1832976
+    - Watanabe, K., & Zhou, Y. (2020). Theory-Driven Analysis of Large Corpora: Semisupervised Topic Classification of the UN Speeches: Social Science Computer Review. https://doi.org/10.1177/0894439320907027
+    - Catalinac, A, & Watanabe, K. (2019). 日本語の量的テキスト分析. WIAS Research Bulletin 2018. https://www.waseda.jp/inst/wias/assets/uploads/2019/03/RB011_133-143.pdf
+
