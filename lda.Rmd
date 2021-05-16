@@ -2,7 +2,7 @@
 title: "教師なしと準教師ありLDAの比較"
 author: "Kohei Watanabe"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
-output: html_document
+output: github_document
 ---
 
 ```{r, message=FALSE}

@@ -37,16 +37,6 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 - C++による並列化により大規模なテキストデータを処理できる．
 - 欧米の大学の量的テキスト分析の研究と教育で広く使われている．
 
-## 配布ファイル
-
-Dropbox (https://bit.ly/3ePC9AC)
-
-- スライド
-    - slides.html
-- データ（元ファイルが必要であれば川田氏に相談）
-- キーワード辞書
-- Rスクリプト
-
 ## 量的テキスト分析とは
 
 - 政治学では文書が重要な研究資料
@@ -165,21 +155,6 @@ cat(readLines("dictionary.yml"), sep = "\n")
     - Seeded LDA，Newsmap，Latent Semantic Scaling
     - 種語を通じてユーザーが分析結果を制御できる．
     - 訓練するためのコストが小さい．
-
-## デモ用ファイル
-
-Dropbox (https://bit.ly/3ePC9AC)
-
-- 前処理
-    - corpus.R
-    - tokens.R
-- 頻度分析
-    - frequency.R
-- 辞書分析
-    - dictionary.R
-- トピックモデル
-    - lda.R
-    - lda.Rmd
 
 ## まとめ
 
