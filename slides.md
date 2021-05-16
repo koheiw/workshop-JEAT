@@ -30,16 +30,6 @@
 -   C++による並列化により大規模なテキストデータを処理できる．
 -   欧米の大学の量的テキスト分析の研究と教育で広く使われている．
 
-## 配布ファイル
-
-Dropbox (<https://bit.ly/3ePC9AC>)
-
--   スライド
-    -   slides.html
--   データ（元ファイルが必要であれば川田氏に相談）
--   キーワード辞書
--   Rスクリプト
-
 ## 量的テキスト分析とは
 
 -   政治学では文書が重要な研究資料
@@ -152,9 +142,9 @@ print(toks, max_ndoc = -1, max_ntok = -1)
 dfm(toks, remove_padding = TRUE)
 ## Document-feature matrix of: 2 documents, 12 features (50.00% sparse) and 0 docvars.
 ##        features
-## docs    福祉 興味 熱意 募集 歓迎 未経験者 施設利用 利用者 生活支援 作業支援
-##   text1    0    0    0    0    0        0        1      1        1        1
-##   text2    1    1    1    1    1        1        0      0        0        0
+## docs    福祉 興味 熱意 募集 歓迎 施設利用 利用者 生活支援 作業支援 食事介助
+##   text1    0    0    0    0    0        1      1        1        1        1
+##   text2    1    1    1    1    1        0      0        0        0        0
 ## [ reached max_nfeat ... 2 more features ]
 ```
 
@@ -216,21 +206,6 @@ YAMLフォーマットによって，辞書の階層的な構造を定義でき�
     -   Seeded LDA，Newsmap，Latent Semantic Scaling
     -   種語を通じてユーザーが分析結果を制御できる．
     -   訓練するためのコストが小さい．
-
-## デモ用ファイル
-
-Dropbox (<https://bit.ly/3ePC9AC>)
-
--   前処理
-    -   corpus.R
-    -   tokens.R
--   頻度分析
-    -   frequency.R
--   辞書分析
-    -   dictionary.R
--   トピックモデル
-    -   lda.R
-    -   lda.Rmd
 
 ## まとめ
 
